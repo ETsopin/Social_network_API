@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Registration</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a href="index.html" class="back-link">Back to Dashboard</a>
+<h1>User Registration</h1>
+
+<form id="registerForm">
+    <input type="text" id="login" placeholder="Login" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button type="submit">Register</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const login = document.getElementById('login').value;
+        const password = document.getElementById('password').value;
+        const resultDiv = document.getElementById('result');
+
+        try {
+            const response = await fetch('http://localhost:8080/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ login, password })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                resultDiv.className = 'success';
+                resultDiv.innerHTML = `Success: ${data.message}`;
+            } else {
+                resultDiv.className = 'error';
+                resultDiv.innerHTML = `Error: ${data.message}`;
+            }
+        } catch (error) {
+            resultDiv.className = 'error';
+            resultDiv.innerHTML = `Network error: ${error.message}`;
+        }
+    });
+</script>
+</body>
+</html>

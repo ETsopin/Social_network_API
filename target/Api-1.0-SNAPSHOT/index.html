@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .nav-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: #333;
+        }
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .nav-card h2 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .nav-card p {
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>Social Network API management dashboard</h1>
+    <p>Select an endpoint to interact with</p>
+</div>
+
+<div class="nav-grid">
+    <a href="register.html" class="nav-card">
+        <h2>Register</h2>
+        <p>Create new user account</p>
+    </a>
+
+    <a href="create_post.html" class="nav-card">
+        <h2>Create</h2>
+        <p>Create new post</p>
+    </a>
+
+    <a href="my.html" class="nav-card">
+        <h2>My</h2>
+        <p>See your posts</p>
+    </a>
+
+    <a href="latest.html" class="nav-card">
+        <h2>Latest</h2>
+        <p>See latest posts</p>
+    </a>
+
+    <a href="feed.html" class="nav-card">
+        <h2>Feed</h2>
+        <p>Your feed</p>
+    </a>
+
+    <a href="filter.html" class="nav-card">
+        <h2>Filter</h2>
+        <p>Filter posts by content</p>
+    </a>
+
+    <a href="subscribe.html" class="nav-card">
+        <h2>Subscribe</h2>
+        <p>Subscribe to other users</p>
+    </a>
+    <a href="subscribers.html" class="nav-card">
+        <h2>Subscribers</h2>
+        <p>See your subscribers</p>
+    </a>
+    <a href="subscriptions.html" class="nav-card">
+        <h2>Subscriptions</h2>
+        <p>See your subscriptions</p>
+    </a>
+</div>
+</body>
+</html>

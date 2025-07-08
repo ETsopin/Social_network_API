@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feed</title>
+    <link rel="stylesheet" href="posts_styles.css">
+</head>
+<body>
+<a href="index.html" class="back-link">Back to Dashboard</a>
+<h1>Feed</h1>
+
+<form id="postsForm">
+    <input type="text" id="login" placeholder="Login" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button type="submit">find</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+    document.getElementById('postsForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const login = document.getElementById('login').value;
+        const password = document.getElementById('password').value;
+        const resultDiv = document.getElementById('result');
+
+        const params = new URLSearchParams();
+        params.append('login', login);
+        params.append('password', password);
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/posts/feed?${params}`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+            const data = await response.json();
+
+            if (data.success) {
+                resultDiv.className = 'success';
+                const processedData = processNestedJson(data);
+                resultDiv.innerHTML = formatJsonForDisplay(processedData);
+            } else {
+                resultDiv.className = 'error';
+                resultDiv.innerHTML = `Error: ${data.message}`;
+            }
+        } catch (error) {
+            resultDiv.className = 'error';
+            resultDiv.innerHTML = `Network error: ${error.message}`;
+        }
+    });
+
+    function processNestedJson(obj) {
+        const result = {...obj};
+        for (const key in result) {
+            if (typeof result[key] === 'string') {
+                try {
+                    const parsed = JSON.parse(result[key]);
+                    result[key] = parsed;
+                } catch (e) {
+                }
+            } else if (typeof result[key] === 'object' && result[key] !== null) {
+                result[key] = processNestedJson(result[key]);
+            }
+        }
+        return result;
+    }
+    function formatJsonForDisplay(obj) {
+        const html = [];
+
+        function formatValue(value) {
+            if (value === null) {
+                return '<span class="json-null">null</span>';
+            }
+            if (typeof value === 'boolean') {
+                return `<span class="json-boolean">${value}</span>`;
+            }
+            if (typeof value === 'number') {
+                return `<span class="json-number">${value}</span>`;
+            }
+            if (typeof value === 'string') {
+                return `<span class="json-string">"${value}"</span>`;
+            }
+            if (Array.isArray(value)) {
+                if (value.length === 0) return '[]';
+                const items = value.map(item => `<div class="json-object">${formatValue(item)},</div>`).join('');
+                return `[<div class="json-object">${items}</div>]`;
+            }
+            if (typeof value === 'object') {
+                const entries = Object.entries(value);
+                if (entries.length === 0) return '{}';
+                const items = entries.map(([key, val]) =>
+                    `<div class="json-object"><span class="json-property">"${key}"</span>: ${formatValue(val)},</div>`
+                ).join('');
+                return `{<div class="json-object">${items}</div>}`;
+            }
+            return value;
+        }
+
+        html.push(formatValue(obj));
+        return html.join('');
+    }
+</script>
+</body>
+</html>
