@@ -53,7 +53,6 @@ public class UserRepository {
 
             stmt.execute();
         }
-
     }
 
     public Boolean containsLogin(String login) {
@@ -79,7 +78,7 @@ public class UserRepository {
         return Boolean.FALSE;
     }
 
-    public Boolean checkCredentials(String userId, String password) {
+    public Optional<String> getPassword(String userId) {
         String sql = "SELECT password FROM users_schema.user WHERE id = ?";
 
         try (Connection conn = DatabaseConfig.getConnection();
@@ -92,12 +91,10 @@ public class UserRepository {
             try (ResultSet rs = pstmt.executeQuery()) {
                 // Обработка результатов
                 if (!rs.next()) {
-                    return Boolean.FALSE;
+                    return Optional.empty();
                 } else {
                     String pass = rs.getString("password");
-                    if (!pass.equals(password)) {
-                        return Boolean.FALSE;
-                    }
+                    return Optional.of(pass);
                 }
             }
 
@@ -105,7 +102,8 @@ public class UserRepository {
             System.out.println("Ошибка при работе с базой данных");
             e.printStackTrace();
         }
-        return Boolean.TRUE;
+
+        return Optional.empty();
     }
 
     public HashSet<String> getUserSubscriptions(String userId) {

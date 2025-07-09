@@ -3,11 +3,11 @@ package model;
 import java.time.LocalDateTime;
 
 public class Post {
-    private String id;
-    private String creatorId;
+    private final String id;
+    private final String creatorId;
     private String creatorLogin;
-    private String content;
-    private LocalDateTime timestamp;
+    private final String content;
+    private final LocalDateTime timestamp;
 
     public Post(String id, String creatorId, String content, LocalDateTime timestamp) {
         this.id = id;
@@ -30,22 +30,6 @@ public class Post {
         this.creatorId = "";
         this.content = "";
         this.timestamp = null;
-    }
-
-    public void setLogin(String login) {
-        this.creatorLogin = login;
-    }
-
-    @Override
-    public String toString() {
-        String s = "Post: \n";
-        s += "id: " + this.id + '\n';
-        s += "creator_id: " + this.creatorId + '\n';
-        s += "creator_login: " + this.creatorLogin + '\n';
-        s += "content: " + this.content + '\n';
-        s += "timestamp: " + this.timestamp.toString() + '\n';
-
-        return s;
     }
 
     public String getId() {

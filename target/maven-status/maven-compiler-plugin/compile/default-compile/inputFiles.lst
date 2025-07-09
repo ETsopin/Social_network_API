@@ -14,6 +14,7 @@
 /Users/tsopin/Desktop/praktika_java/SocialNetworkV2/src/main/java/service/UserService.java
 /Users/tsopin/Desktop/praktika_java/SocialNetworkV2/src/main/java/controller/SubscribersServlet.java
 /Users/tsopin/Desktop/praktika_java/SocialNetworkV2/src/main/java/controller/SubscriberPostsServlet.java
+/Users/tsopin/Desktop/praktika_java/SocialNetworkV2/src/main/java/util/PasswordHasher.java
 /Users/tsopin/Desktop/praktika_java/SocialNetworkV2/src/main/java/service/CentralService.java
 /Users/tsopin/Desktop/praktika_java/SocialNetworkV2/src/main/java/model/User.java
 /Users/tsopin/Desktop/praktika_java/SocialNetworkV2/src/main/java/controller/LatestServlet.java

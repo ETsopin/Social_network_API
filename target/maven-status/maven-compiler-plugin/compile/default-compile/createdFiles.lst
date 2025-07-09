@@ -3,6 +3,7 @@ repository/UserRepository.class
 repository/PostRepository.class
 controller/CreatePostServlet.class
 controller/RegisterServlet.class
+util/PasswordHasher.class
 controller/SubscriptionsServlet.class
 db/DatabaseConfig.class
 controller/LatestServlet.class

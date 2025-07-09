@@ -2,6 +2,7 @@ package service;
 
 import model.User;
 import repository.UserRepository;
+import util.PasswordHasher;
 
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -11,9 +12,6 @@ import java.util.UUID;
 public class UserService {
     private final UserRepository userRepository = new UserRepository();
 
-    public Boolean checkCredentialsById(String userId, String userPassword) {
-        return userRepository.checkCredentials(userId, userPassword);
-    }
 
     public Boolean checkCredentialsByLogin(String userLogin, String userPassword) {
 
@@ -23,7 +21,11 @@ public class UserService {
             return Boolean.FALSE;
         }
 
-        return userRepository.checkCredentials(userId.get(), userPassword);
+        String passwordHash = PasswordHasher.hashPassword(userPassword);
+        Optional<String> storedPasswordHash = userRepository.getPassword(userId.get());
+
+        return storedPasswordHash.map(passwordHash::equals).orElse(Boolean.FALSE);
+
     }
 
 
@@ -33,8 +35,9 @@ public class UserService {
             return Optional.empty();
         }
 
+        String passwordHash = PasswordHasher.hashPassword(password);
         String id = UUID.randomUUID().toString();
-        User user = new User(id, login, password);
+        User user = new User(id, login, passwordHash);
         try {
             userRepository.addUser(user);
         } catch (SQLException e) {
